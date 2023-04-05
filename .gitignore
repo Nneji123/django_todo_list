@@ -1,0 +1,8 @@
+env/
+__pycache__/
+*.py[cod]
+.python-version
+db.sqlite3
+simple_django_commands.txt
+
+
