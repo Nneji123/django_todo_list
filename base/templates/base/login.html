@@ -4,6 +4,17 @@
 <form class="mx-auto" style="max-width: 300px;" method="post">
   <!-- Email input -->
   {% csrf_token %}
+
+  {% if form.errors %}
+  <div class="alert alert-danger" class="mx-auto">
+    {% for field, errors in form.errors.items %}
+    <strong>{{ field|title }}</strong>
+    {% for error in errors %}
+    <div>{{ error }}</div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+  {% endif %}
   <div class="form-outline mb-4">
     <input id="form2Example1" class="form-control" type="text" name="username" autofocus autocapitalize="none"
       autocomplete="username" maxlength="150" required id="id_username" />

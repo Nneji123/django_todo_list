@@ -33,6 +33,7 @@ class RegisterView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
+
         return super(RegisterView, self).form_valid(form)
     
     def get(self, *args, **kwargs):
@@ -96,8 +97,6 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'task'
     template_name = 'base/task_delete.html'
     success_url = reverse_lazy('tasks')
-    
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(TaskDelete, self).form_valid(form)
-    
+    def get_queryset(self):
+        owner = self.request.user
+        return self.model.objects.filter(user=owner)

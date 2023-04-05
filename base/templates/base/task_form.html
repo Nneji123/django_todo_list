@@ -1,10 +1,27 @@
-<h1>task form </h1>
-<a href="{% url 'tasks' %}"> Go Back</a>
+{% extends 'base/main.html' %}
+{% block content %}
+          <div class="card-header" style="background-color: #3b71ca;">
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">Go back</a>
+          </div>
+          <div class="card-body">
+            <form method="post" action="">
+                {% csrf_token %}
+              <div class="mb-3">
+                <label for="id_title" class="form-label">Title:</label>
+                <input type="text" name="title" value="{{task.title}}" maxlength="200" required id="id_title" class="form-control">
+                
+              </div>
+              <div class="mb-3">
+                <label for="id_description" class="form-label">Description:</label>
+                <textarea name="description" cols="40" rows="3" maxlength="500" id="id_description" class="form-control" rows="3">{{task.description}}</textarea>
+              </div>
+              <div class="form-check mb-3">
+                <input type="checkbox" name="complete" id="id_complete" class="form-check-input" value="{{task.complete}}">
+                <label for="id_complete" class="form-check-label">Complete:</label>
 
-<form method="post" action="">
-{% csrf_token %}
-    {{form.as_p}}
+              </div>
+              <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+          </div>
+{% endblock %}
 
-<input type="submit" value="submit">
-
-</form>
