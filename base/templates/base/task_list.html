@@ -1,221 +1,104 @@
+{% extends 'base/main.html' %}
 {% load static %}
-<!DOCTYPE html>
+{% block content %}
+<div class="card-header text-center py-3 bg-primary">
+    <div class="row">
+        <div class="col" style="margin-left: -20px;">
+            <style>
+                h1,
+                h3 {
+                    font-size: 20px;
+                    color: white;
+                }
 
-<html lang="en">
+                #task-id {
+                    font-size: 15px;
+                }
+            </style>
+            <h1>Hello {{request.user|title}}!</h1>
+            <h3 style="position: absolute; transform: translateY(-50%); margin-left: 20px; margin-bottom: 30px;">You have {{count}} incomplete task{{ count|pluralize:"s" }}</h3>
+        </div>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Django Todo List</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://kit.fontawesome.com/5285e374b0.js" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+        <div class="col text-right" style="margin-left: 100px;">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="btn btn-light">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-light">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet"
-        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
-</head>
+<div class="card-body">
+    <div class="d-flex justify-content-between">
+        <form method="GET">
 
-<style>
-    @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+            <div class="form-outline mb-4">
+                <input type='text' name='search-area' id="search-area" class="form-control" value="{{search_input}}">
+                <label class="form-label" for="search-area">Search your task</label>
+            </div>
+            <input class="btn btn-primary ml-2" type="submit" value='Search'>
 
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: #ffffff;
-    }
+        </form>
 
-    p,
-    ul,
-    li {
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.9em;
-        font-weight: 300;
-        line-height: 1.7em;
-        color: #757575;
-    }
+        {% if tasks|length > 0 %}
+        <a id="add-link" href="{% url 'task-create' %}" class="btn btn-success" style="height: 35px;">&#x2b;</a>
+        {% endif %}
+    </div>
+</div>
 
-    h1 {
-        font-size: 1.9em;
-        margin-bottom: 1.2em;
-        margin-top: 1.0em;
-    }
-
-    i {
-        margin-bottom: 1.2em;
-    }
-</style>
-
-<style>
-    #list1 .form-control {
-        border-color: transparent;
-    }
-
-    #list1 .form-control:focus {
-        border-color: transparent;
-        box-shadow: none;
-    }
-
-    #list1 .select-input.form-control[readonly]:not([disabled]) {
-        background-color: #fbfbfb;
-    }
-</style>
-
-<body>
-    <section class="vh-100">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col">
-                    <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
-                        <div class="card-body py-4 px-4 px-md-5">
-
-                            <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
-                                <i class="fas fa-check-square me-1"></i>
-                                <u>My Todo-s</u>
-                                </p>
-                                {% if request.user.is_authenticated %}
-                                <p>{{request.user}}</p>
-                                <a href="{% url 'logout' %}">Logout</a>
-                                {% else %}
-                                <a href="{% url 'login' %}">Login</a>
-                                {% endif %}
-                                <p>{{request.object}}</p>
-                            <div class="pb-2">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-row align-items-center">
-                                            <input type="text" class="form-control form-control-lg"
-                                                id="exampleFormControlInput1" placeholder="Add new...">
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Set due date"><i
-                                                    class="fas fa-calendar-alt fa-lg me-3"></i></a>
-                                            <div>
-                                                <button type="button" class="btn btn-primary">Add</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
-                                <p class="small mb-0 me-2 text-muted">Filter</p>
-                                <select class="select">
-                                    <option value="1">All</option>
-                                    <option value="2">Completed</option>
-                                    <option value="3">Active</option>
-                                    <option value="4">Has due date</option>
-                                </select>
-                                <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
-                                <select class="select">
-                                    <option value="1">Added date</option>
-                                    <option value="2">Due date</option>
-                                </select>
-                                <a href="#!" style="color: #23af89;" data-mdb-toggle="tooltip" title="Ascending"><i
-                                        class="fas fa-sort-amount-down-alt ms-2"></i></a>
-                            </div>
-
-                            <ul class="list-group list-group-horizontal rounded-0 bg-transparent">
-                                <li
-                                    class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="form-check">
-                                        <input class="form-check-input me-0" type="checkbox" value=""
-                                            id="flexCheckChecked1" aria-label="..." checked />
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                    <p class="lead fw-normal mb-0">Buy groceries for next week</p>
-                                </li>
-                                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="d-flex flex-row justify-content-end mb-1">
-                                        <a href="#!" class="text-info" data-mdb-toggle="tooltip" title="Edit todo"><i
-                                                class="fas fa-pencil-alt me-3"></i></a>
-                                        <a href="#!" class="text-danger" data-mdb-toggle="tooltip"
-                                            title="Delete todo"><i class="fas fa-trash-alt"></i></a>
-                                    </div>
-                                    <div class="text-end text-muted">
-                                        <a href="#!" class="text-muted" data-mdb-toggle="tooltip" title="Created date">
-                                            <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>28th Jun 2020
-                                            </p>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="list-group list-group-horizontal rounded-0">
-                                <li
-                                    class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="form-check">
-                                        <input class="form-check-input me-0" type="checkbox" value=""
-                                            id="flexCheckChecked2" aria-label="..." />
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                    <p class="lead fw-normal mb-0">Renew car insurance</p>
-                                </li>
-                                <li class="list-group-item px-3 py-1 d-flex align-items-center border-0 bg-transparent">
-                                    <div
-                                        class="py-2 px-3 me-2 border border-warning rounded-3 d-flex align-items-center bg-light">
-                                        <p class="small mb-0">
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Due on date">
-                                                <i class="fas fa-hourglass-half me-2 text-warning"></i>
-                                            </a>
-                                            28th Jun 2020
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="d-flex flex-row justify-content-end mb-1">
-                                        <a href="#!" class="text-info" data-mdb-toggle="tooltip" title="Edit todo"><i
-                                                class="fas fa-pencil-alt me-3"></i></a>
-                                        <a href="#!" class="text-danger" data-mdb-toggle="tooltip"
-                                            title="Delete todo"><i class="fas fa-trash-alt"></i></a>
-                                    </div>
-                                    <div class="text-end text-muted">
-                                        <a href="#!" class="text-muted" data-mdb-toggle="tooltip" title="Created date">
-                                            <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>28th Jun 2020
-                                            </p>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="list-group list-group-horizontal rounded-0 mb-2">
-                                <li
-                                    class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="form-check">
-                                        <input class="form-check-input me-0" type="checkbox" value=""
-                                            id="flexCheckChecked3" aria-label="..." />
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                    <p class="lead fw-normal mb-0 bg-light w-100 ms-n2 ps-2 py-1 rounded">Sign up for
-                                        online
-                                        course</p>
-                                </li>
-                                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                    <div class="d-flex flex-row justify-content-end mb-1">
-                                        <a href="#!" class="text-danger" data-mdb-toggle="tooltip"
-                                            title="Delete todo"><i class="fas fa-trash-alt"></i></a>
-                                    </div>
-                                    <div class="text-end text-muted">
-                                        <a href="#!" class="text-muted" data-mdb-toggle="tooltip" title="Created date">
-                                            <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>28th Jun 2020
-                                            </p>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
+<div class="card-body">
+    <ul class="list-group">
+        {% for task in tasks %}
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="task-title">
+                    {% if task.complete %}
+                    <div class="task-complete-icon"></div>
+                    <i><s><a href="{% url 'task-update' task.id %}" style>{{task}}</a></s></i> {% else %}
+                    <div class="task-incomplete-icon"></div>
+                    <a href="{% url 'task-update' task.id %}">{{task}}</a> 
+                    {% endif %}
+                </div>
+                <div class="task-controls">
+                    <a class="delete-link" href="{% url 'task-delete' task.id %}" style="font-size: 15px;">&#215;</a>
+                    <!-- <span class="handle">&#10247;</span> -->
                 </div>
             </div>
+        </li>
+        {% empty %}
+        <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+            <h3 style="color:grey;">Task does not exist!</h3>
+            <h3 style="color:grey;"><a href="{% url 'task-create' %}"> Create a new task</a>
+            </h3>
         </div>
-    </section>
-</body>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+    var taskList = document.getElementById("tasklist");
+    var reorderForm = document.getElementById("reorderForm");
+    var positionInput = document.getElementById("positionInput");
 
-</html>
+    let sortable = Sortable.create(taskList, {
+        handle: '.handle',
+        ghostClass: 'dropArea',
+        chosenClass: 'selectedTask',
+
+    });
+
+    function reordering() {
+        const rows = document.getElementsByClassName("task-wrapper");
+        let pos = [];
+        for (let row of rows) {
+            pos.push(row.dataset.position);
+        }
+        console.log(pos.join(","))
+        positionInput.value = pos.join(',');
+        reorderForm.submit();
+    }
+
+    document.ondrop = reordering
+</script>
+{% endblock %}
