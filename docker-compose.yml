@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: django-todo-list
+    command: gunicorn 0.0.0.0:5000 todo_list.wsgi:application
+    ports:
+      - 8000:5000
+    volumes:
+      - .:/app

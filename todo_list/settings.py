@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -139,24 +140,27 @@ WSGI_APPLICATION = "todo_list.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': os.environ.get('DB-USER'),
-        'PASSWORD': os.environ.get('DB-PASSWORD'),
-        'HOST': os.environ.get('DB-HOST'),
-        'PORT': os.environ.get('DB-PORT'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': os.environ.get('DB-USER'),
+#         'PASSWORD': os.environ.get('DB-PASSWORD'),
+#         'HOST': os.environ.get('DB-HOST'),
+#         'PORT': os.environ.get('DB-PORT'),
+#     }
+# }
+
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get("INTERNAL_DB_URI"))
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
