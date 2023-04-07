@@ -9,6 +9,7 @@ The application is deployed on the Railway.app platform and uses a database host
 - Python 3.8.10
 - Django 4.2
 - django-allauth
+- whitenoise `For rendering static files in deployment`
 
 ## Installation
 
