@@ -12,6 +12,7 @@
 [![Postgres](https://img.shields.io/badge/Postgres-darkblue.svg?style=flat&logo=postgres&logoColor=white)](https://github.com/Nneji123/django_todo_list)
 ![hosted](https://img.shields.io/badge/Railway-430098?style=flat&logo=railway&logoColor=white)
 ![reposize](https://img.shields.io/github/repo-size/Nneji123/django_todo_list)
+</div>
 
 Django Todo List is a web application developed using the Django web framework. It provides a simple to-do list management system with user authentication and social account login with django_allauth. This application is developed based on Class-Based Views (CBV) principles.
 
