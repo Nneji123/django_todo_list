@@ -1,4 +1,18 @@
-# Django Todo List
+<p align="center">
+  <img src="./static/favicon.ico" alt="ABUAD LMS Logo", width="120", height="120">
+</p>
+<h1 align="center">Django Todo List</h1>
+<div align="center">
+
+[![Language](https://img.shields.io/badge/Python-darkblue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+[![Framework](https://img.shields.io/badge/Django-darkgreen.svg?style=flat&logo=django&logoColor=white)](https://github.com/Nneji123/django_todo_list)
+[![HTML](https://img.shields.io/badge/HTML-black.svg?style=flat&logo=html5&logoColor=white)](https://github.com/Nneji123/django_todo_list)
+[![CSS](https://img.shields.io/badge/CSS-blue.svg?style=flat&logo=css3&logoColor=white)](https://github.com/Nneji123/django_todo_list)
+[![Javascript](https://img.shields.io/badge/Javascript-yellow.svg?style=flat&logo=javascript&logoColor=white)](https://github.com/Nneji123/django_todo_list)
+[![Postgres](https://img.shields.io/badge/Postgres-darkblue.svg?style=flat&logo=postgres&logoColor=white)](https://github.com/Nneji123/django_todo_list)
+![hosted](https://img.shields.io/badge/Railway-430098?style=flat&logo=railway&logoColor=white)
+![reposize](https://img.shields.io/github/repo-size/Nneji123/django_todo_list)
+</div>
 
 Django Todo List is a web application developed using the Django web framework. It provides a simple to-do list management system with user authentication and social account login with django_allauth. This application is developed based on Class-Based Views (CBV) principles.
 
@@ -9,6 +23,7 @@ The application is deployed on the Railway.app platform and uses a database host
 - Python 3.8.10
 - Django 4.2
 - django-allauth
+- whitenoise `For rendering static files in deployment`
 
 ## Installation
 
