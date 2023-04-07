@@ -6,4 +6,5 @@ db.sqlite3
 simple_django_commands.txt
 .env
 client_secret_132204003086-3icf35pi9fcckt7r3eadd6n0n3r25pou.apps.googleusercontent.com.json
+staticfiles/
 
