@@ -45,16 +45,16 @@
       <p>Not Registered? <a href="{% url 'register' %}">Register</a></p>
       <p>or sign in with:</p>
       {% load socialaccount%}
-      <a href="{% provider_login_url 'facebook' method='oauth2' %}" type="button" class="btn btn-link btn-floating mx-1">
+      <!-- <a href="{% provider_login_url 'facebook' method='oauth2' %}" type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-facebook-f"></i>
-      </a>
+      </a> -->
       <a href="{% provider_login_url 'google' %}" type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-google"></i>
       </a>
 
-      <a href="{% provider_login_url 'twitter' %}" type="button" class="btn btn-link btn-floating mx-1">
+      <!-- <a href="{% provider_login_url 'twitter' %}" type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-twitter"></i>
-      </a>
+      </a> -->
 
       <a href="{% provider_login_url 'github' %}" type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-github"></i>
