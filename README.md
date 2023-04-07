@@ -18,6 +18,19 @@ Django Todo List is a web application developed using the Django web framework. 
 
 The application is deployed on the Railway.app platform and uses a database hosted on the same platform.
 
+## Screenshots
+<p align="center">
+  <img src="./.github/screenshots/Screenshot%20(441).png" width="250">
+  <img src="./.github/screenshots/Screenshot%20(442).png" width="250">
+  <img src="./.github/screenshots/Screenshot%20(443).png" width="250">
+</p>
+
+<p align="center">
+  <img src="./.github/screenshots/Screenshot%20(444).png" width="250">
+  <img src="./.github/screenshots/Screenshot%20(445).png" width="250">
+  <img src="./.github/screenshots/Screenshot%20(446).png" width="250">
+</p>
+
 ## Requirements
 
 - Python 3.8.10
